@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<head>
+    <title>{% block title %}{% endblock %} - Online Library</title>
+</head>
+<body>
+    <div>
+        <a href="/index">Online Library</a>
+        <a href="/books">Books</a>
+        <a href="/authors">Authors</a>
+    {% if not session.user_name %}
+        <a href="{{ url_for('registration') }}">Registration</a>
+        <a href="{{ url_for('login') }}">log in</a>
+    {% else %}
+        <a href="{{ url_for('add_book') }}">Add book</a>
+        <a href="{{ url_for('delete_book') }}">Delete book</a>
+        <a href="{{ url_for('logout') }}">log out</a>
+    {% endif %}
+    </div>
+
+    <hr>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</body>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ author }}
+{% endblock %}
+
+{% block content %}
+<h2>Add Book</h2>
+{% from "_formhelpers.html" import render_field %}
+<form method=post action="/add_book" name="add_book">
+    <dl>
+      {{ render_field(form.book_name)}}
+      {{ render_field(form.author_name)}}
+    </dl>
+    <input type=submit value="Add book">
+</form>
+
+<br>
+{% endblock %}

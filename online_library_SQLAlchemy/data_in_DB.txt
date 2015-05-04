@@ -1,0 +1,19 @@
+Users: [<User: Vlad email: v@v.com>, <User: Dima email: d@d.com>, <User: Kate email: k@k.com>,
+ <User: Valeriy email: va@va.com>]
+
+
+book_author = {'Learning Python': 'Mark Lutz',
+               'Flask Web Development': 'Miguel Grinberg',
+               'Dead Souls': 'Nikolai Gogol',
+               'Eugene Onegin': 'Alexander Pushkin',
+               'War and Peace': 'Lev Tolstoy',
+               'Anna Karenina': 'Lev Tolstoy',
+               'When We Met': 'Molly McAdams, A.L. Jackson, Christina Lee',
+               'Hard to Be a God': 'Arkady Strugatsky, Boris Strugatsky',
+               'Roadside Picnic': 'Arkady Strugatsky, Boris Strugatsky'
+               }
+
+
+
+for t in db.metadata.tables.items():
+        print(t)

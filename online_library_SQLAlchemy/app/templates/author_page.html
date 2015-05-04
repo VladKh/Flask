@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ author }}
+{% endblock %}
+
+{% block content %}
+<h2>{{ author }}</h2>
+{% if session.user_name %}
+    <br>
+    <form action="/add_book" name="author_books">
+        <input type=submit value="Add book">
+    </form>
+{% endif %}
+<br>
+<ol>
+{% for book in auhtor_books %}
+        <li>{{ book }}</li>
+{% endfor %}
+</ol>
+<br>
+{% endblock %}

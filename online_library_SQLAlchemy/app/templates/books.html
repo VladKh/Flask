@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<h2>Books:</h2>
+<ol>
+    {% for dict_book in books_list %}
+        {% for key, value in dict_book.items() %}
+        <li>
+            {{ key.book_name }} :
+            {% for author in  value %}
+                <a href="/{{ author }}">{{ author }}</a>
+            {% endfor %}
+        </li>
+        {% endfor %}
+    {% endfor %}
+</ol>
+{% endblock %}
