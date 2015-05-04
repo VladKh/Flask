@@ -131,7 +131,6 @@ def books():
 
     books_list = []
     for book in books:
-        print(type(book))
         url_authors = []
         id_book_author = Bookcase.query.filter_by(book_id=book.id).all()
         for ids in id_book_author:
