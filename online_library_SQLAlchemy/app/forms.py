@@ -20,6 +20,10 @@ class Registration(LoginForm):
     confirm = PasswordField('Confirm password')
 
 
-class Book(Form):
+class AddBook(Form):
     book_name = StringField('Book name', [Length(min=1, max=200)])
     author_name = StringField('Author name', [Length(min=1, max=200)])
+
+
+class DeleteBook(Form):
+    book_name = StringField('Book name', [Length(min=1, max=200)])

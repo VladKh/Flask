@@ -2,7 +2,7 @@ from flask import flash, redirect, url_for, session, render_template, request
 from app import app
 from database import db_session
 from models import Users, Bookcase, BookNames, Authors
-from forms import LoginForm, Registration, Book
+from forms import LoginForm, Registration, AddBook, DeleteBook
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
@@ -40,21 +40,8 @@ def insert_book_to_db(author, book_name):
 @app.route('/')
 @app.route('/index')
 def index():
-    books_list = BookNames.query.order_by(BookNames.id.desc())
-
-    books_index = []
-    for book in books_list:
-        url_authors = []
-        id_book_author = Bookcase.query.filter_by(book_id=book.id).all()
-        for ids in id_book_author:
-            author_name = str(Authors.query.get(ids.authors_id).author_name)
-            url_authors.append(author_name)
-
-        books_index.append({book: url_authors})
-
     variables = {
         'title': 'Home',
-        'books_index': books_index,
     }
 
     return render_template('index.html', **variables)
@@ -161,7 +148,7 @@ def author_books(author):
         auhtor_books.append(
             BookNames.query.filter_by(id=ids.book_id).first().book_name)
 
-    form = Book(request.form)
+    form = AddBook(request.form)
     if request.method == 'POST' and form.validate() and check_login():
         book_name = request.form['book_name']
         insert_book_to_db(author, book_name)
@@ -179,7 +166,7 @@ def add_book():
         return redirect(url_for('login'))
 
     author = ''
-    form = Book(request.form)
+    form = AddBook(request.form)
 
     if request.method == 'POST' and form.validate():
         book_name = request.form['book_name']
@@ -187,6 +174,7 @@ def add_book():
 
         insert_book_to_db(author, book_name)
         flash('Book %s added to author %s.' % (book_name, author))
+        return redirect(url_for('books'))
 
     variables = {'author': author,
                  'form': form
@@ -200,14 +188,25 @@ def delete_book():
         return redirect(url_for('login'))
 
     author = ''
-    form = Book(request.form)
+    form = DeleteBook(request.form)
 
     if request.method == 'POST' and form.validate():
         book_name = request.form['book_name']
+        book = BookNames.query.filter_by(book_name=book_name).first()
+        if book:
+            #Delete book dependency in Bookcase table
+            id_book_author = Bookcase.query.filter_by(book_id=book.id).all()
+            for ids in id_book_author:
+                db_session.delete(ids)
+                db_session.commit()
 
-        flash('Book %s successful delete.' % book_name)
+            #Delete book in BookNames table
+            db_session.delete(book)
+            db_session.commit()
+            flash('Book "%s" successful delete.' % book_name)
+            return redirect(url_for('books'))
+        else:
+            flash('No such book %s.' % book_name)
 
-    variables = {'author': author,
-                 'form': form
-                 }
+    variables = {'form': form}
     return render_template('delete_book.html', **variables)

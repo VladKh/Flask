@@ -2,7 +2,9 @@
 {% block title %}
     {{ title }}
 {% endblock %}
-{% block content %}
-Welkom to the library
-{% endblock %}
 
+{% block content %}
+{% if not session.user_name %}
+    Welkom to the library
+{% endif %}
+{% endblock %}
