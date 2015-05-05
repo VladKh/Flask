@@ -37,20 +37,19 @@
 		<type label="SET" length="1" sql="SET" quote=""/>
 		<type label="Bit" length="0" sql="bit" quote=""/>
 	</group>
-</datatypes><table x="676" y="582" name="Users">
+</datatypes><table x="792" y="479" name="Users">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="nickname" null="0" autoincrement="0">
+<row name="name" null="0" autoincrement="0">
 <datatype>VARCHAR(64)</datatype>
 </row>
 <row name="email" null="1" autoincrement="0">
 <datatype>VARCHAR(120)</datatype>
 <default>NULL</default></row>
-<row name="role_id" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Roles" row="id" />
-</row>
+<row name="password" null="1" autoincrement="0">
+<datatype>VARCHAR(50)</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
@@ -75,7 +74,7 @@
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="authors_name" null="1" autoincrement="0">
+<row name="author_name" null="1" autoincrement="0">
 <datatype>VARCHAR(200)</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
@@ -89,15 +88,7 @@
 <row name="book_name" null="1" autoincrement="0">
 <datatype>VARCHAR(200)</datatype>
 <default>NULL</default></row>
-<key type="PRIMARY" name="">
-<part>id</part>
-</key>
-</table>
-<table x="844" y="582" name="Roles">
-<row name="id" null="1" autoincrement="1">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="role" null="1" autoincrement="0">
+<row name="новое поле" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
