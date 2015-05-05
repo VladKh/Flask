@@ -42,7 +42,7 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="name" null="0" autoincrement="0">
-<datatype>VARCHAR(64)</datatype>
+<datatype>VARCHAR(50)</datatype>
 </row>
 <row name="email" null="1" autoincrement="0">
 <datatype>VARCHAR(120)</datatype>
@@ -75,7 +75,7 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="author_name" null="1" autoincrement="0">
-<datatype>VARCHAR(200)</datatype>
+<datatype>VARCHAR(120)</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
@@ -86,10 +86,7 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="book_name" null="1" autoincrement="0">
-<datatype>VARCHAR(200)</datatype>
-<default>NULL</default></row>
-<row name="новое поле" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
+<datatype>VARCHAR(120)</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
