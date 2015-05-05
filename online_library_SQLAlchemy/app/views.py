@@ -4,22 +4,26 @@ from database import db_session
 from models import Users, Bookcase, BookNames, Authors
 from forms import LoginForm, Registration, AddBook, DeleteBook
 
+
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
 
+
 def nonexistent_author(author):
     return bool(Authors.query.filter_by(author_name=author).first())
 
+
 def check_login():
     try:
-         session['user_name']
+        session['user_name']
     except KeyError:
         return False
     return True
 
+
 def insert_book_to_db(author, book_name):
-    #Check for a nonexistent author
+    # Check for a nonexistent author.
     if not nonexistent_author(author):
         a = Authors(author_name=author)
         db_session.add(a)
@@ -37,14 +41,14 @@ def insert_book_to_db(author, book_name):
     else:
         flash('Such book already exist')
 
+
 @app.route('/')
 @app.route('/index')
 def index():
-    variables = {
-        'title': 'Home',
-    }
+    variables = {'title': 'Home'}
 
     return render_template('index.html', **variables)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -69,11 +73,13 @@ def login():
     }
     return render_template('login.html', **variables)
 
+
 @app.route('/logout')
 def logout():
     session.pop('user_name', None)
     flash('You are logged out!')
     return render_template('index.html', title='Home')
+
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
@@ -101,6 +107,7 @@ def registration():
 
     return render_template('registration.html', form=form)
 
+
 @app.route('/authors')
 def all_authors():
     authors_list = Authors.query.all()
@@ -111,6 +118,7 @@ def all_authors():
     }
 
     return render_template('authors.html', **variables)
+
 
 @app.route('/books')
 def books():
@@ -134,9 +142,10 @@ def books():
 
     return render_template('books.html', **variables)
 
+
 @app.route('/<author>/', methods=['GET', 'POST'])
 def author_books(author):
-    #Check for a nonexistent author
+    # Check for a nonexistent author.
     if not nonexistent_author(author):
         return redirect(url_for('index'))
 
@@ -158,6 +167,7 @@ def author_books(author):
                  'form': form
                  }
     return render_template('author_page.html', **variables)
+
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
@@ -181,6 +191,7 @@ def add_book():
                  }
     return render_template('add_book.html', **variables)
 
+
 @app.route('/delete_book', methods=['GET', 'POST'])
 def delete_book():
     if not check_login():
@@ -194,13 +205,13 @@ def delete_book():
         book_name = request.form['book_name']
         book = BookNames.query.filter_by(book_name=book_name).first()
         if book:
-            #Delete book dependency in Bookcase table
+            # Delete book dependency in Bookcase table.
             id_book_author = Bookcase.query.filter_by(book_id=book.id).all()
             for ids in id_book_author:
                 db_session.delete(ids)
                 db_session.commit()
 
-            #Delete book in BookNames table
+            # Delete book in BookNames table.
             db_session.delete(book)
             db_session.commit()
             flash('Book "%s" successful delete.' % book_name)

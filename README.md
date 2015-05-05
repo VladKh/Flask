@@ -11,3 +11,5 @@ Used technologies:</br>
  SQLite</br>
  Forms</br>
  Jinja2 Templates</br>
+ 
+ To run application you need to add host address to config.py

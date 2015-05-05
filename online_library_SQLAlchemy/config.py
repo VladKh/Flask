@@ -1,5 +1,5 @@
-HOST = '192.168.0.4'
-PORT = 7777
+HOST = ''
+PORT = 80
 DEBUG = True
 CSRF_ENABLED = True
 SECRET_KEY = 'TXkgZmlyc3Qgd2ViIHNpdGUgPSk='
